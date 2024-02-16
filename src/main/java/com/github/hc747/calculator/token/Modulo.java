@@ -12,7 +12,7 @@ public record Modulo() implements BinaryOperator {
     }
 
     @Nonnull
-    public Value evaluate(@Nonnull Value left, @Nonnull Value right) {
-        return left.mod(right);
+    public Value evaluate(@Nonnull Value x, @Nonnull Value y) {
+        return x.mod(y);
     }
 }

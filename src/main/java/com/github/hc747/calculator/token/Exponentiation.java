@@ -18,7 +18,7 @@ public record Exponentiation() implements BinaryOperator {
     }
 
     @Nonnull
-    public Value evaluate(@Nonnull Value left, @Nonnull Value right) {
-        return left.pow(right);
+    public Value evaluate(@Nonnull Value x, @Nonnull Value y) {
+        return x.pow(y);
     }
 }

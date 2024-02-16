@@ -13,7 +13,7 @@ public record UnaryPositive() implements UnaryOperator {
 
     @Nonnull
     @Override
-    public Value evaluate(@Nonnull Value value) {
-        return value;
+    public Value evaluate(@Nonnull Value x) {
+        return x;
     }
 }

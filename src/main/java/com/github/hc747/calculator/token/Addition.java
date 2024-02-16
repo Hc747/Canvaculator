@@ -13,7 +13,7 @@ public record Addition() implements BinaryOperator {
 
     @Nonnull
     @Override
-    public Value evaluate(@Nonnull Value left, @Nonnull Value right) {
-        return left.add(right);
+    public Value evaluate(@Nonnull Value x, @Nonnull Value y) {
+        return x.add(y);
     }
 }

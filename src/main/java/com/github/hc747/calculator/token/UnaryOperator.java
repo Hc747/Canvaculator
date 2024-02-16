@@ -8,7 +8,7 @@ public sealed interface UnaryOperator extends Operator
     permits UnaryNegative, UnaryPositive {
 
     @Nonnull
-    Value evaluate(@Nonnull Value value);
+    Value evaluate(@Nonnull Value x);
 
     @Nonnull
     @Override

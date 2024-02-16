@@ -13,7 +13,7 @@ public record UnaryNegative() implements UnaryOperator {
 
     @Nonnull
     @Override
-    public Value evaluate(@Nonnull Value value) {
-        return value.negate();
+    public Value evaluate(@Nonnull Value x) {
+        return x.negate();
     }
 }
