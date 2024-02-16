@@ -56,4 +56,14 @@ public sealed interface Operator extends Token
     static Operator exponentiation() {
         return Exponentiation.OPERATOR;
     }
+
+    @Nonnull
+    static Operator unary(boolean positive) {
+        return positive ? positive() : negative();
+    }
+
+    @Nonnull
+    static Operator binary(boolean addition) {
+        return addition ? addition() : subtraction();
+    }
 }
