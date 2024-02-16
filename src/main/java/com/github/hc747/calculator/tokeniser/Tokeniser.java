@@ -5,6 +5,7 @@ import jakarta.annotation.Nonnull;
 
 import java.util.Queue;
 
+@FunctionalInterface
 public interface Tokeniser {
 
     @Nonnull
