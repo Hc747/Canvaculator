@@ -1,0 +1,42 @@
+plugins {
+    id('java')
+    id('io.freefair.lombok') version '8.6'
+    id('me.champeau.jmh') version '0.7.2'
+}
+
+group = 'com.github.hc747'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+java {
+    toolchain {
+        vendor = JvmVendorSpec.AMAZON
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+dependencies {
+    implementation("jakarta.annotation:jakarta.annotation-api:$jakarta_annotations_version")
+    // JMH Benchmarking framework
+    jmh "org.openjdk.jmh:jmh-core:$jmh_version"
+    jmh "org.openjdk.jmh:jmh-generator-annprocess:$jmh_version"
+}
+
+testing {
+    suites {
+        test {
+            useJUnitJupiter(junit_version)
+            dependencies {
+//                annotationProcessor 'org.projectlombok:lombok'
+                implementation "org.junit.jupiter:junit-jupiter-api:$junit_version"
+                implementation "org.junit.jupiter:junit-jupiter-params:$junit_version"
+                implementation "org.junit.jupiter:junit-jupiter-engine:$junit_version"
+                implementation "org.mockito:mockito-core:$mockito_version"
+                implementation "org.mockito:mockito-junit-jupiter:$mockito_version"
+            }
+        }
+    }
+}
