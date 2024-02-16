@@ -32,16 +32,14 @@ public record ExpressionTokeniser() implements Tokeniser {
                 // Supports a subset of valid BigDecimals as per the grammar specified in: java.math.BigDecimal.
                 // Does not support BigDecimals with exponents denoted by 'e/E'.
                 // Does not attempt to defend against improperly formatted BigDecimals, i.e., '1...5.00.0'
-                final var builder = new StringBuilder().append(value);
+                final var start = index - 1;
                 while (index < expression.length()) {
                     final var next = expression.charAt(index);
                     final var valid = Character.isDigit(next) || next == '.';
                     if (!valid) break;
-                    builder.append(next);
                     index++;
                 }
-                final var number = new BigDecimal(builder.toString());
-                token = new Value(number);
+                token = new Value(new BigDecimal(expression.substring(start, index)));
             } else {
                 token = switch (value) {
                     case ADDITION, SUBTRACTION -> {
@@ -60,7 +58,7 @@ public record ExpressionTokeniser() implements Tokeniser {
                     case EXPONENTIATION -> Operator.exponentiation();
                     case LEFT_BRACKET -> Bracket.left();
                     case RIGHT_BRACKET -> Bracket.right();
-                    default -> throw new IllegalStateException("Unexpected value: " + value);
+                    default -> throw new IllegalStateException("Unexpected token: " + value);
                 };
             }
             tokens.add(token);
