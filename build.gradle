@@ -1,7 +1,4 @@
 plugins {
-    id('java')
-    id('io.freefair.lombok') version '8.6'
-    id('me.champeau.jmh') version '0.7.2'
     id 'java'
     id 'maven-publish'
     id 'io.freefair.lombok' version '8.6'
