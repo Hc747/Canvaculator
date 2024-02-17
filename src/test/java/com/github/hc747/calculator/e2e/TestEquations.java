@@ -2,7 +2,7 @@ package com.github.hc747.calculator.e2e;
 
 import com.github.hc747.calculator.evaluator.ExpressionEvaluator;
 import com.github.hc747.calculator.evaluator.ShuntingYardExpressionEvaluator;
-import com.github.hc747.calculator.tokeniser.ExpressionTokeniser;
+import com.github.hc747.calculator.tokeniser.InfixExpressionTokeniser;
 import jakarta.annotation.Nonnull;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,6 +14,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.math.BigDecimal;
 import java.util.stream.Stream;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 public class TestEquations {
@@ -22,14 +23,14 @@ public class TestEquations {
 
     @BeforeEach
     public void setup() {
-        evaluator = new ShuntingYardExpressionEvaluator(new ExpressionTokeniser());
+        evaluator = new ShuntingYardExpressionEvaluator(new InfixExpressionTokeniser());
     }
 
     @DisplayName("Verify that equations yield expected answers")
     @ParameterizedTest(name = "{0} = {1}")
     @MethodSource("equations")
     public void verify_equation_evaluates_correctly(@Nonnull final String expression, @Nonnull final Number answer) {
-        final var result = Assertions.assertDoesNotThrow(() -> evaluator.evaluate(expression));
+        final var result = assertDoesNotThrow(() -> evaluator.evaluate(expression));
         Assertions.assertEquals(result, answer);
     }
 

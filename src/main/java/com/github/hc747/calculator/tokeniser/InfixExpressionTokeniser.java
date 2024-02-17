@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.util.ArrayDeque;
 import java.util.Queue;
 
-public record ExpressionTokeniser() implements Tokeniser {
+public record InfixExpressionTokeniser() implements Tokeniser {
 
     private static final char SUBTRACTION = '-';
     private static final char ADDITION = '+';
