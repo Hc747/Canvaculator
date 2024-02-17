@@ -26,32 +26,31 @@ public record ShuntingYardExpressionEvaluator(
 
         while (!tokens.isEmpty()) {
             final var token = tokens.poll();
-            if (token instanceof Value value) {
-                output.push(value);
-            } else if (token instanceof UnaryOperator operator) {
-                operators.push(operator);
-            } else if (token instanceof BinaryOperator operator) {
-                while (operators.peek() instanceof Operator other) {
-                    final var supersedes = (other.precedence() > operator.precedence()) || (operator.precedence() == other.precedence() && operator.associativity() == Associativity.LEFT);
-                    if (!supersedes) break;
-                    output.push(operators.poll());
+            switch (token) {
+                case Value value -> output.push(value);
+                case UnaryOperator operator -> operators.push(operator);
+                case BinaryOperator operator -> {
+                    while (operators.peek() instanceof Operator other) {
+                        final var supersedes = (other.precedence() > operator.precedence()) || (operator.precedence() == other.precedence() && operator.associativity() == Associativity.LEFT);
+                        if (!supersedes) break;
+                        output.push(operators.poll());
+                    }
+                    operators.push(operator);
                 }
-                operators.push(operator);
-            } else if (token instanceof LeftBracket bracket) {
-                operators.push(bracket);
-            } else if (token instanceof RightBracket) {
-                Token top;
-                while ((top = operators.poll()) != null) {
-                    if (top instanceof Operator) {
-                        output.push(top);
-                    } else if (top instanceof LeftBracket) {
-                        break;
-                    } else {
-                        throw new IllegalStateException("Unexpected token in operator stack: " + top);
+                case LeftBracket bracket -> operators.push(bracket);
+                case RightBracket bracket -> {
+                    Token top;
+                    while ((top = operators.poll()) != null) {
+                        if (top instanceof Operator) {
+                            output.push(top);
+                        } else if (top instanceof LeftBracket) {
+                            break;
+                        } else {
+                            throw new IllegalStateException("Unexpected token in operator stack: " + top);
+                        }
                     }
                 }
-            } else {
-                throw new IllegalStateException("Unexpected token in input: " + token);
+                case null, default -> throw new IllegalStateException("Unexpected token in input: " + token);
             }
         }
 
