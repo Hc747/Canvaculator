@@ -31,7 +31,6 @@ testing {
         test {
             useJUnitJupiter(junit_version)
             dependencies {
-//                annotationProcessor 'org.projectlombok:lombok'
                 implementation "org.junit.jupiter:junit-jupiter-api:$junit_version"
                 implementation "org.junit.jupiter:junit-jupiter-params:$junit_version"
                 implementation "org.junit.jupiter:junit-jupiter-engine:$junit_version"
@@ -54,11 +53,8 @@ publishing {
         }
     }
     publications {
-        register("jar", MavenPublication) {
-            from components.java
-            pom {
-                url.set("https://github.com/Hc747/Canvaculator.git")
-            }
+        gpr(MavenPublication) {
+            from(components.java)
         }
     }
 }
